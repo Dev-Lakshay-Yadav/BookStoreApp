@@ -13,11 +13,10 @@ app.use(cors())
 dotenv.config()
 
 const PORT = process.env.PORT || 4000  
-const URL = process.env.MongoDBURL
 
 // Connect to mongodb
 try {
-    mongoose.connect(URL, {
+    mongoose.connect(process.env.MONGODB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -32,14 +31,14 @@ app.use("/book",bookRoute)
 app.use("/user",userRoute)
 
 
-// Deployment
-const __dirname1 = path.resolve()
-if(process.env.NODE_ENV === "production"){
-    app.use(express.static("Frontend/dist"))
-    app.get("*",(req,res)=>{
-        res.sendFile(path.resolve(__dirname1,"Frontend","dist","index.html"))
-    })
-}
+// // Deployment
+// const __dirname1 = path.resolve()
+// if(process.env.NODE_ENV === "production"){
+//     app.use(express.static("Frontend/dist"))
+//     app.get("*",(req,res)=>{
+//         res.sendFile(path.resolve(__dirname1,"Frontend","dist","index.html"))
+//     })
+// }
 
  
 app.listen(PORT, () => {
